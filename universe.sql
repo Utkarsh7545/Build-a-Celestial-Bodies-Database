@@ -158,6 +158,43 @@ ALTER SEQUENCE public.planet_planet_id_seq OWNED BY public.planet.planet_id;
 
 
 --
+-- Name: spacecraft; Type: TABLE; Schema: public; Owner: freecodecamp
+--
+
+CREATE TABLE public.spacecraft (
+    spacecraft_id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    launched_from character varying(100),
+    mission_duration integer NOT NULL,
+    is_active boolean NOT NULL
+);
+
+
+ALTER TABLE public.spacecraft OWNER TO freecodecamp;
+
+--
+-- Name: spacecraft_spacecraft_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.spacecraft_spacecraft_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.spacecraft_spacecraft_id_seq OWNER TO freecodecamp;
+
+--
+-- Name: spacecraft_spacecraft_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+--
+
+ALTER SEQUENCE public.spacecraft_spacecraft_id_seq OWNED BY public.spacecraft.spacecraft_id;
+
+
+--
 -- Name: star; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
@@ -214,6 +251,13 @@ ALTER TABLE ONLY public.moon ALTER COLUMN moon_id SET DEFAULT nextval('public.mo
 --
 
 ALTER TABLE ONLY public.planet ALTER COLUMN planet_id SET DEFAULT nextval('public.planet_planet_id_seq'::regclass);
+
+
+--
+-- Name: spacecraft spacecraft_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.spacecraft ALTER COLUMN spacecraft_id SET DEFAULT nextval('public.spacecraft_spacecraft_id_seq'::regclass);
 
 
 --
@@ -280,6 +324,15 @@ INSERT INTO public.planet VALUES (12, 'TOI 700 d', 2, false, 'Terrestrial', 100)
 
 
 --
+-- Data for Name: spacecraft; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
+INSERT INTO public.spacecraft VALUES (1, 'Voyager 1', 'Earth', 45, true);
+INSERT INTO public.spacecraft VALUES (2, 'Cassini', 'Earth', 20, false);
+INSERT INTO public.spacecraft VALUES (3, 'Pioneer 10', 'Earth', 30, false);
+
+
+--
 -- Data for Name: star; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
@@ -310,6 +363,13 @@ SELECT pg_catalog.setval('public.moon_moon_id_seq', 20, true);
 --
 
 SELECT pg_catalog.setval('public.planet_planet_id_seq', 12, true);
+
+
+--
+-- Name: spacecraft_spacecraft_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.spacecraft_spacecraft_id_seq', 3, true);
 
 
 --
@@ -365,6 +425,22 @@ ALTER TABLE ONLY public.planet
 
 ALTER TABLE ONLY public.planet
     ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
+
+
+--
+-- Name: spacecraft spacecraft_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.spacecraft
+    ADD CONSTRAINT spacecraft_name_key UNIQUE (name);
+
+
+--
+-- Name: spacecraft spacecraft_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.spacecraft
+    ADD CONSTRAINT spacecraft_pkey PRIMARY KEY (spacecraft_id);
 
 
 --
